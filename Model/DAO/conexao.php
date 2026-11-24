@@ -4,7 +4,7 @@ abstract class Conexao {
 
     public static function getInstance() {
         if (self::$instance === null) {
-            $dsn = 'mysql:host=localhost;dbname=bdpoo;charset=utf8mb4';
+            $dsn = 'mysql:host=127.0.0.1;dbname=bdpoo;charset=utf8mb4;port=3306';
             $username = 'root';
             $password = '';
 
