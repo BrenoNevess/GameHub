@@ -194,6 +194,13 @@ $gamesEndpoint = $basePath . '/api/games';
             return card;
         }
 
+        function excludeFromPopular(games) {
+            return games.filter(game => (
+                typeof game.name !== 'string'
+                || !game.name.toLowerCase().includes('hentai')
+            ));
+        }
+
         async function loadGames(containerId, filters) {
             const container = document.getElementById(containerId);
             try {
@@ -217,9 +224,16 @@ $gamesEndpoint = $basePath . '/api/games';
                     showSectionMessage(container, 'Nenhum jogo encontrado nesta seleção.');
                     return;
                 }
-                container.replaceChildren(...payload.data.map(createGameCard));
+                const games = containerId === 'popular-games'
+                    ? excludeFromPopular(payload.data)
+                    : payload.data;
+                if (games.length === 0) {
+                    showSectionMessage(container, 'Nenhum jogo encontrado nesta seleção.');
+                    return;
+                }
+                container.replaceChildren(...games.map(createGameCard));
             } catch (error) {
-                console.error('Falha ao carregar jogos da RAWG:', error);
+                console.error('Falha ao carregar jogos:', error);
                 showSectionMessage(
                     container,
                     'Não foi possível carregar os jogos no momento. Tente novamente mais tarde.',
@@ -228,7 +242,7 @@ $gamesEndpoint = $basePath . '/api/games';
             }
         }
 
-        loadGames('popular-games', 'ordering=-rating&page_size=6');
+        loadGames('popular-games', 'ordering=-rating&page_size=7');
         loadGames('recent-games', 'ordering=-added&page_size=6');
         loadGames('critic-games', 'ordering=-metacritic&page_size=6');
     </script>

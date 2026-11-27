@@ -29,7 +29,7 @@ class GameController {
         }
 
         $page = $this->positiveInteger($query['page'] ?? 1, 'page', 10000);
-        $pageSize = $this->positiveInteger($query['page_size'] ?? 20, 'page_size', 40);
+        $pageSize = $this->positiveInteger($query['page_size'] ?? 20, 'page_size', 20);
         $filters['page'] = $page;
         $filters['page_size'] = $pageSize;
 
