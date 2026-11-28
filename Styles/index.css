@@ -270,6 +270,16 @@
             border-color: rgba(163, 145, 255, .42);
         }
 
+        .header-search select {
+            min-width: 145px;
+            border: 0;
+            border-left: 1px solid var(--border);
+            outline: 0;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+        }
+
         .game-image-wrap {
             position: relative;
             height: 185px;
@@ -285,6 +295,55 @@
         }
 
         .game-card:hover .game-image { transform: scale(1.04); }
+
+        .game-preview {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+            background: linear-gradient(180deg, rgba(10, 13, 22, .12), rgba(10, 13, 22, .96));
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity .22s ease, transform .22s ease;
+        }
+
+        .game-card:hover .game-preview,
+        .game-card:focus-within .game-preview,
+        .game-card:focus .game-preview {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .game-preview dl {
+            width: 100%;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 8px;
+        }
+
+        .game-preview dl div {
+            min-width: 0;
+        }
+
+        .game-preview dt {
+            color: #aeb7cb;
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .game-preview dd {
+            overflow: hidden;
+            margin: 1px 0 0;
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 650;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         .image-fallback {
             display: grid;
@@ -355,6 +414,49 @@
 
         .section-status.error { border-style: solid; color: #e0b0b0; }
 
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .pagination-link {
+            min-width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface);
+            color: #b9c1d2;
+            font-size: .86rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        a.pagination-link:hover {
+            border-color: rgba(163, 145, 255, .48);
+            color: #d5ccff;
+        }
+
+        .pagination-link.active {
+            border-color: var(--purple);
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .pagination-direction { min-width: 92px; }
+
+        .pagination-link.disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
         .site-footer {
             border-top: 1px solid var(--border);
             background: rgba(10, 13, 22, .42);
@@ -408,6 +510,7 @@
             .nav-link { padding: 7px 9px; }
             .header-search { padding: 3px; }
             .header-search input { padding: 0 8px; font-size: .8rem; }
+            .header-search select { min-width: 112px; max-width: 38%; font-size: .78rem; }
             .login-link { padding: 0 9px; }
             .hero { width: calc(100% - 32px); padding-top: 66px; }
             .hero-search { height: 56px; }
@@ -421,6 +524,13 @@
             .game-meta { font-size: .7rem; }
             .game-info h3 { font-size: .92rem; }
             .game-action { font-size: .78rem; }
+            .game-preview { padding: 7px; }
+            .game-preview dl { gap: 3px 6px; }
+            .game-preview dt { font-size: .55rem; }
+            .game-preview dd { font-size: .64rem; }
+            .pagination { gap: 5px; }
+            .pagination-link { min-width: 36px; height: 36px; padding: 0 7px; }
+            .pagination-direction { min-width: 78px; font-size: .78rem; }
             .footer-links { flex-wrap: wrap; gap: 18px; }
         }
 

@@ -48,6 +48,28 @@ $jogosVisiveis = array_values(array_filter($jogos, function ($jogo) use ($qNorma
     return $nomeCombina && $generoCombina;
 }));
 
+$jogosPorPagina = 12;
+$totalJogos = count($jogosVisiveis);
+$totalPaginas = max(1, (int) ceil($totalJogos / $jogosPorPagina));
+$pagina = isset($_GET['pagina']) && ctype_digit((string) $_GET['pagina'])
+    ? max(1, (int) $_GET['pagina'])
+    : 1;
+$pagina = min($pagina, $totalPaginas);
+$inicio = ($pagina - 1) * $jogosPorPagina;
+$jogosPagina = array_slice($jogosVisiveis, $inicio, $jogosPorPagina);
+
+function gamehub_query_catalogo(string $baseUrl, string $q, string $genero, int $pagina): string {
+    $parametros = [];
+    if ($q !== '') {
+        $parametros['q'] = $q;
+    }
+    if ($genero !== 'Todos') {
+        $parametros['genero'] = $genero;
+    }
+    $parametros['pagina'] = $pagina;
+    return $baseUrl . '?' . http_build_query($parametros);
+}
+
 function gamehub_formatar_preco($valor) {
     if ($valor === null) {
         return null;
@@ -80,6 +102,7 @@ function gamehub_formatar_preco($valor) {
             </nav>
             <form class="header-search" action="<?= htmlspecialchars($viewPath . '/catalogo.php', ENT_QUOTES, 'UTF-8') ?>" method="get">
                 <input type="search" name="q" value="<?= htmlspecialchars($q, ENT_QUOTES, 'UTF-8') ?>" placeholder="Pesquise pelo nome do jogo..." aria-label="Pesquisar jogos" minlength="2">
+                <input type="hidden" name="genero" value="<?= htmlspecialchars($genero, ENT_QUOTES, 'UTF-8') ?>">
                 <button class="search-button" type="submit">Pesquisar</button>
             </form>
             <a class="login-link" href="<?= htmlspecialchars($viewPath . ($isLoggedIn ? '/favoritos.php' : '/login.php'), ENT_QUOTES, 'UTF-8') ?>">
@@ -116,12 +139,22 @@ function gamehub_formatar_preco($valor) {
 
                 <?php if (count($jogosVisiveis) > 0): ?>
                     <div class="game-grid" id="catalogo-games">
-                        <?php foreach ($jogosVisiveis as $jogo): ?>
-                            <article class="game-card">
+                        <?php foreach ($jogosPagina as $jogo): ?>
+                            <article class="game-card" tabindex="0">
                                 <div class="game-image-wrap">
                                     <img class="game-image" src="<?= htmlspecialchars($jogo['cover_url'], ENT_QUOTES, 'UTF-8') ?>" alt="" loading="lazy" referrerpolicy="no-referrer"
                                         onerror="this.remove(); this.parentElement.insertAdjacentHTML('afterbegin', '&lt;div class=&quot;image-fallback&quot; aria-hidden=&quot;true&quot;&gt;🎮&lt;/div&gt;');">
                                     <span class="rating-badge"><?= $jogo['catalog_rating'] !== null ? '★ ' . number_format((float) $jogo['catalog_rating'], 1, ',', '.') : 'Sem nota' ?></span>
+                                    <div class="game-preview" aria-label="Informações do jogo">
+                                        <dl>
+                                            <div><dt>Gênero</dt><dd><?= htmlspecialchars($jogo['genre'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                            <div><dt>Ano</dt><dd><?= htmlspecialchars((string) $jogo['year'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                            <div><dt>Desenvolvedora</dt><dd><?= htmlspecialchars($jogo['developer'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                            <div><dt>História</dt><dd><?= htmlspecialchars($jogo['main_story_label'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                            <div><dt>Conclusão</dt><dd><?= htmlspecialchars($jogo['completionist_label'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                            <div><dt>Plataformas</dt><dd><?= htmlspecialchars($jogo['platform'], ENT_QUOTES, 'UTF-8') ?></dd></div>
+                                        </dl>
+                                    </div>
                                 </div>
                                 <div class="game-info">
                                     <div class="game-meta">
@@ -138,6 +171,30 @@ function gamehub_formatar_preco($valor) {
                             </article>
                         <?php endforeach; ?>
                     </div>
+
+                    <?php if ($totalPaginas > 1): ?>
+                        <nav class="pagination" aria-label="Paginação do catálogo">
+                            <?php if ($pagina > 1): ?>
+                                <a class="pagination-link pagination-direction" href="<?= htmlspecialchars(gamehub_query_catalogo($viewPath . '/catalogo.php', $q, $genero, $pagina - 1), ENT_QUOTES, 'UTF-8') ?>" aria-label="Página anterior">← Anterior</a>
+                            <?php else: ?>
+                                <span class="pagination-link pagination-direction disabled" aria-disabled="true">← Anterior</span>
+                            <?php endif; ?>
+
+                            <?php for ($numeroPagina = 1; $numeroPagina <= $totalPaginas; $numeroPagina++): ?>
+                                <?php if ($numeroPagina === $pagina): ?>
+                                    <span class="pagination-link active" aria-current="page"><?= $numeroPagina ?></span>
+                                <?php else: ?>
+                                    <a class="pagination-link" href="<?= htmlspecialchars(gamehub_query_catalogo($viewPath . '/catalogo.php', $q, $genero, $numeroPagina), ENT_QUOTES, 'UTF-8') ?>"><?= $numeroPagina ?></a>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+
+                            <?php if ($pagina < $totalPaginas): ?>
+                                <a class="pagination-link pagination-direction" href="<?= htmlspecialchars(gamehub_query_catalogo($viewPath . '/catalogo.php', $q, $genero, $pagina + 1), ENT_QUOTES, 'UTF-8') ?>" aria-label="Próxima página">Próxima →</a>
+                            <?php else: ?>
+                                <span class="pagination-link pagination-direction disabled" aria-disabled="true">Próxima →</span>
+                            <?php endif; ?>
+                        </nav>
+                    <?php endif; ?>
                 <?php else: ?>
                     <div class="section-status">Nenhum jogo encontrado. Tente outro nome ou remova o filtro de gênero.</div>
                 <?php endif; ?>

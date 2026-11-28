@@ -1,24 +1,8 @@
 <?php
-/**
- * Catálogo estático de jogos do GameHub.
- *
- * Fonte original: game-price-playtime-compass-main
- * (drizzle/migrations/0000_gamehub_schema_and_catalog.sql, linhas 150-285).
- *
- * Mantém exatamente os mesmos 25 jogos, na mesma ordem e com os mesmos
- * identificadores (`id` = `catalog_id` do projeto de origem). Os preços
- * (`offers`) e a avaliação (`catalog_rating`) também vêm do catálogo
- * original. Este arquivo não depende da tabela `games`/RAWG existente
- * neste projeto nem a modifica; ele é uma fonte de dados independente
- * para a aba de Catálogo.
- *
- * Uso:
- *   require_once __DIR__ . '/CatalogoJogos.php';
- *   $jogos = gamehub_catalogo();
- */
+
 
 function gamehub_catalogo(): array {
-    return [
+    return array_merge([
         [
             'id' => 1,
             'name' => 'Resident Evil 4',
@@ -1239,5 +1223,517 @@ function gamehub_catalogo(): array {
                 ],
             ],
         ],
-    ];
+    ],
+        gamehub_catalogo_adicional()
+    );
+}
+
+function gamehub_catalogo_adicional(): array {
+    $json = <<<'JSON'
+[
+  {
+    "id": 51,
+    "titulo": "Paratopic",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/897030/header.jpg",
+    "desenvolvedora": "Arbitrary Metric",
+    "publicadora": "Arbitrary Metric",
+    "ano": 2018,
+    "genero": "Terror",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "1h",
+    "tempoCompleto": "2h",
+    "avaliacao": 4.5,
+    "lojas": [
+      { "nome": "Itch.io", "precoAtual": 14.99, "precoOriginal": 14.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 16.99, "precoOriginal": 16.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "Nintendo eShop", "precoAtual": 28.00, "precoOriginal": 28.00, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 52,
+    "titulo": "Miasmata",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/223510/header.jpg",
+    "desenvolvedora": "IonFX",
+    "publicadora": "IonFX",
+    "ano": 2012,
+    "genero": "Terror",
+    "plataformas": ["PC"],
+    "tempoHistoria": "11h",
+    "tempoCompleto": "17h",
+    "avaliacao": 4.3,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 27.99, "precoOriginal": 27.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 28.99, "precoOriginal": 28.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 53,
+    "titulo": "Penumbra: Overture",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/22180/header.jpg",
+    "desenvolvedora": "Frictional Games",
+    "publicadora": "Frictional Games",
+    "ano": 2007,
+    "genero": "Terror",
+    "plataformas": ["PC"],
+    "tempoHistoria": "5h",
+    "tempoCompleto": "7h",
+    "avaliacao": 4.5,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 19.99, "precoOriginal": 19.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 32.99, "precoOriginal": 32.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 54,
+    "titulo": "The Last Door: Collector's Edition",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/284390/header.jpg",
+    "desenvolvedora": "The Game Kitchen",
+    "publicadora": "Phoenix Online Publishing",
+    "ano": 2014,
+    "genero": "Terror",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "4h 30m",
+    "tempoCompleto": "6h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 20.69, "precoOriginal": 20.69, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 32.99, "precoOriginal": 32.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 55,
+    "titulo": "Year Walk",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/269050/header.jpg",
+    "desenvolvedora": "Simogo",
+    "publicadora": "Simogo",
+    "ano": 2014,
+    "genero": "Terror",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "2h",
+    "tempoCompleto": "3h",
+    "avaliacao": 4.6,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 11.99, "precoOriginal": 11.99, "desconto": "0%", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 56,
+    "titulo": "Lovers in a Dangerous Spacetime",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252110/header.jpg",
+    "desenvolvedora": "Asteroid Base",
+    "publicadora": "Asteroid Base",
+    "ano": 2015,
+    "genero": "Co-op",
+    "plataformas": ["PC", "PlayStation", "Xbox", "Switch"],
+    "tempoHistoria": "6h 30m",
+    "tempoCompleto": "14h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 27.99, "precoOriginal": 27.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 79.90, "precoOriginal": 79.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 57,
+    "titulo": "Unrailed!",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1016920/header.jpg",
+    "desenvolvedora": "Indoor Astronaut",
+    "publicadora": "Daedalic Entertainment",
+    "ano": 2020,
+    "genero": "Co-op",
+    "plataformas": ["PC", "PlayStation", "Xbox", "Switch"],
+    "tempoHistoria": "10h",
+    "tempoCompleto": "35h",
+    "avaliacao": 4.6,
+    "lojas": [
+      { "nome": "Epic Games Store", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 59.99, "precoOriginal": 59.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 104.90, "precoOriginal": 104.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 58,
+    "titulo": "Wilmot's Warehouse",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/839870/header.jpg",
+    "desenvolvedora": "Hollow Ponds / Richard Hogg",
+    "publicadora": "Finji",
+    "ano": 2019,
+    "genero": "Co-op",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "7h",
+    "tempoCompleto": "12h",
+    "avaliacao": 4.8,
+    "lojas": [
+      { "nome": "Epic Games Store", "precoAtual": 28.99, "precoOriginal": 28.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "Nintendo eShop", "precoAtual": 74.99, "precoOriginal": 74.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 59,
+    "titulo": "RESEARCH and DESTROY",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1279310/header.jpg",
+    "desenvolvedora": "Implausible Industries",
+    "publicadora": "Spike Chunsoft",
+    "ano": 2022,
+    "genero": "Co-op",
+    "plataformas": ["PC", "PlayStation", "Xbox", "Switch"],
+    "tempoHistoria": "12h",
+    "tempoCompleto": "20h",
+    "avaliacao": 4.4,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Xbox Store", "precoAtual": 74.95, "precoOriginal": 74.95, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 104.90, "precoOriginal": 104.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 60,
+    "titulo": "OpenClonk",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/385380/header.jpg",
+    "desenvolvedora": "OpenClonk Team",
+    "publicadora": "OpenClonk Team",
+    "ano": 2010,
+    "genero": "Co-op",
+    "plataformas": ["PC"],
+    "tempoHistoria": "15h",
+    "tempoCompleto": "40h",
+    "avaliacao": 4.5,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 0.00, "precoOriginal": 0.00, "desconto": "Grátis", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 61,
+    "titulo": "Caves of Qud",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/333640/header.jpg",
+    "desenvolvedora": "Freehold Games",
+    "publicadora": "Kitfox Games",
+    "ano": 2024,
+    "genero": "RPG",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "45h",
+    "tempoCompleto": "160h",
+    "avaliacao": 4.9,
+    "lojas": [
+      { "nome": "Itch.io", "precoAtual": 79.90, "precoOriginal": 79.90, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 88.99, "precoOriginal": 88.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "GOG", "precoAtual": 88.99, "precoOriginal": 88.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 62,
+    "titulo": "Paper Sorcerer",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/263560/header.jpg",
+    "desenvolvedora": "Ultra Runaway Games",
+    "publicadora": "Ultra Runaway Games",
+    "ano": 2013,
+    "genero": "RPG",
+    "plataformas": ["PC"],
+    "tempoHistoria": "12h",
+    "tempoCompleto": "18h",
+    "avaliacao": 4.4,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 10.49, "precoOriginal": 10.49, "desconto": "0%", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 63,
+    "titulo": "Horizon's Gate",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1224290/header.jpg",
+    "desenvolvedora": "Rad Codex",
+    "publicadora": "Rad Codex",
+    "ano": 2020,
+    "genero": "RPG",
+    "plataformas": ["PC"],
+    "tempoHistoria": "32h",
+    "tempoCompleto": "68h",
+    "avaliacao": 4.8,
+    "lojas": [
+      { "nome": "Itch.io", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 64,
+    "titulo": "A Legionary's Life",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1058430/header.jpg",
+    "desenvolvedora": "Alessandro Roberti",
+    "publicadora": "Alessandro Roberti",
+    "ano": 2019,
+    "genero": "RPG",
+    "plataformas": ["PC"],
+    "tempoHistoria": "6h 30m",
+    "tempoCompleto": "24h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 20.69, "precoOriginal": 20.69, "desconto": "0%", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 65,
+    "titulo": "Virgo Versus The Zodiac",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/920320/header.jpg",
+    "desenvolvedora": "Moonana",
+    "publicadora": "Serenity Forge",
+    "ano": 2019,
+    "genero": "RPG",
+    "plataformas": ["PC", "PlayStation", "Xbox", "Switch"],
+    "tempoHistoria": "14h",
+    "tempoCompleto": "22h",
+    "avaliacao": 4.6,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 104.90, "precoOriginal": 104.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 66,
+    "titulo": "The Dishwasher: Vampire Smile",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268990/header.jpg",
+    "desenvolvedora": "Ska Studios",
+    "publicadora": "Ska Studios",
+    "ano": 2011,
+    "genero": "Ação",
+    "plataformas": ["PC", "Xbox"],
+    "tempoHistoria": "5h 30m",
+    "tempoCompleto": "16h",
+    "avaliacao": 4.8,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 19.99, "precoOriginal": 19.99, "desconto": "0%", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 67,
+    "titulo": "Jet Lancer",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/913060/header.jpg",
+    "desenvolvedora": "Code Wakers",
+    "publicadora": "Armor Games Studios",
+    "ano": 2020,
+    "genero": "Ação",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "4h 30m",
+    "tempoCompleto": "9h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 28.99, "precoOriginal": 28.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "Nintendo eShop", "precoAtual": 74.99, "precoOriginal": 74.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 68,
+    "titulo": "Lucah: Born of a Dream",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/896460/header.jpg",
+    "desenvolvedora": "melessthanthree",
+    "publicadora": "melessthanthree",
+    "ano": 2018,
+    "genero": "Ação",
+    "plataformas": ["PC", "Switch"],
+    "tempoHistoria": "7h",
+    "tempoCompleto": "15h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "Itch.io", "precoAtual": 28.99, "precoOriginal": 28.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 37.99, "precoOriginal": 37.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 69,
+    "titulo": "Colt Canyon",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/940710/header.jpg",
+    "desenvolvedora": "Retrific",
+    "publicadora": "Headup",
+    "ano": 2020,
+    "genero": "Ação",
+    "plataformas": ["PC", "PlayStation", "Xbox", "Switch"],
+    "tempoHistoria": "4h",
+    "tempoCompleto": "19h",
+    "avaliacao": 4.5,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 28.99, "precoOriginal": 28.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 79.90, "precoOriginal": 79.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 70,
+    "titulo": "Assault Spy",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/767930/header.jpg",
+    "desenvolvedora": "Wazen",
+    "publicadora": "NIS America",
+    "ano": 2018,
+    "genero": "Ação",
+    "plataformas": ["PC"],
+    "tempoHistoria": "6h 30m",
+    "tempoCompleto": "18h",
+    "avaliacao": 4.6,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 47.49, "precoOriginal": 47.49, "desconto": "0%", "melhorPreco": true }
+    ]
+  },
+  {
+    "id": 71,
+    "titulo": "Wrought Flesh",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1762010/header.jpg",
+    "desenvolvedora": "Narayana Games",
+    "publicadora": "Narayana Games",
+    "ano": 2021,
+    "genero": "FPS",
+    "plataformas": ["PC"],
+    "tempoHistoria": "3h 30m",
+    "tempoCompleto": "7h",
+    "avaliacao": 4.6,
+    "lojas": [
+      { "nome": "Itch.io", "precoAtual": 20.69, "precoOriginal": 20.69, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 20.69, "precoOriginal": 20.69, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 72,
+    "titulo": "Supplice",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1693280/header.jpg",
+    "desenvolvedora": "Mekworx",
+    "publicadora": "Hyperstrange",
+    "ano": 2023,
+    "genero": "FPS",
+    "plataformas": ["PC"],
+    "tempoHistoria": "8h",
+    "tempoCompleto": "14h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 46.99, "precoOriginal": 46.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 73,
+    "titulo": "Neon Struct",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/310740/header.jpg",
+    "desenvolvedora": "Minor Key Games",
+    "publicadora": "Minor Key Games",
+    "ano": 2015,
+    "genero": "FPS",
+    "plataformas": ["PC"],
+    "tempoHistoria": "6h",
+    "tempoCompleto": "10h",
+    "avaliacao": 4.5,
+    "lojas": [
+      { "nome": "GOG", "precoAtual": 19.99, "precoOriginal": 34.99, "desconto": "-43%", "melhorPreco": true },
+      { "nome": "Steam", "precoAtual": 34.99, "precoOriginal": 34.99, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 74,
+    "titulo": "El Paso, Elsewhere",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1546310/header.jpg",
+    "desenvolvedora": "Strange Scaffold",
+    "publicadora": "Strange Scaffold",
+    "ano": 2023,
+    "genero": "FPS",
+    "plataformas": ["PC", "PlayStation", "Xbox"],
+    "tempoHistoria": "8h 30m",
+    "tempoCompleto": "14h",
+    "avaliacao": 4.7,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 59.99, "precoOriginal": 59.99, "desconto": "0%", "melhorPreco": true },
+      { "nome": "Xbox Store", "precoAtual": 74.95, "precoOriginal": 74.95, "desconto": "0%", "melhorPreco": false },
+      { "nome": "PlayStation Store", "precoAtual": 104.90, "precoOriginal": 104.90, "desconto": "0%", "melhorPreco": false }
+    ]
+  },
+  {
+    "id": 75,
+    "titulo": "Angels Fall First",
+    "capa": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367270/header.jpg",
+    "desenvolvedora": "Strangely Interactive",
+    "publicadora": "Strangely Interactive",
+    "ano": 2015,
+    "genero": "FPS",
+    "plataformas": ["PC"],
+    "tempoHistoria": "Competitivo",
+    "tempoCompleto": "Multiplayer",
+    "avaliacao": 4.4,
+    "lojas": [
+      { "nome": "Steam", "precoAtual": 36.99, "precoOriginal": 36.99, "desconto": "0%", "melhorPreco": true }
+    ]
+  }
+]
+JSON;
+
+    $dados = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+    $catalogo = [];
+
+    foreach ($dados as $jogo) {
+        $converterDuracao = static function (string $label): ?float {
+            if (!preg_match('/^(\d+)h(?:\s*(\d+)m)?$/', $label, $partes)) {
+                return null;
+            }
+
+            return (float) $partes[1] + ((float) ($partes[2] ?? 0) / 60);
+        };
+
+        $melhorPreco = null;
+        $ofertas = [];
+        foreach ($jogo['lojas'] as $loja) {
+            $precoAtual = (float) $loja['precoAtual'];
+            if ($melhorPreco === null || $precoAtual < $melhorPreco) {
+                $melhorPreco = $precoAtual;
+            }
+
+            $nomeLoja = $loja['nome'];
+            $consulta = rawurlencode($jogo['titulo']);
+            $urlLoja = 'https://www.google.com/search?q=' . $consulta . '+' . rawurlencode($nomeLoja);
+            if ($nomeLoja === 'Steam') {
+                if (preg_match('~/apps/(\d+)/~', $jogo['capa'], $app)) {
+                    $urlLoja = 'https://store.steampowered.com/app/' . $app[1];
+                }
+            } elseif ($nomeLoja === 'GOG') {
+                $urlLoja = 'https://www.gog.com/pt/games?query=' . $consulta;
+            } elseif ($nomeLoja === 'Epic Games Store') {
+                $urlLoja = 'https://store.epicgames.com/pt-BR/browse?q=' . $consulta;
+            } elseif ($nomeLoja === 'Itch.io') {
+                $urlLoja = 'https://itch.io/search?q=' . $consulta;
+            } elseif ($nomeLoja === 'Nintendo eShop') {
+                $urlLoja = 'https://www.nintendo.com/pt-br/search/#q=' . $consulta;
+            } elseif ($nomeLoja === 'PlayStation Store') {
+                $urlLoja = 'https://store.playstation.com/pt-br/search/' . $consulta;
+            } elseif ($nomeLoja === 'Xbox Store') {
+                $urlLoja = 'https://www.xbox.com/pt-BR/search/results/games?q=' . $consulta;
+            }
+
+            $desconto = (string) $loja['desconto'];
+            $ofertas[] = [
+                'store' => $nomeLoja,
+                'current_price' => $precoAtual,
+                'original_price' => (float) $loja['precoOriginal'],
+                'discount_label' => $desconto === '0%' || $desconto === '' ? null : $desconto,
+                'is_best_price' => (bool) $loja['melhorPreco'],
+                'store_url' => $urlLoja,
+            ];
+        }
+
+        $catalogo[] = [
+            'id' => (int) $jogo['id'],
+            'name' => $jogo['titulo'],
+            'description' => $jogo['titulo'] . ' é um jogo de ' . $jogo['genero'] . ' lançado em ' . $jogo['ano'] . ', publicado por ' . $jogo['publicadora'] . '.',
+            'genre' => $jogo['genero'],
+            'year' => (int) $jogo['ano'],
+            'platform' => implode(', ', $jogo['plataformas']),
+            'developer' => $jogo['desenvolvedora'],
+            'publisher' => $jogo['publicadora'],
+            'main_story_label' => $jogo['tempoHistoria'],
+            'completionist_label' => $jogo['tempoCompleto'],
+            'main_story_hours' => $converterDuracao($jogo['tempoHistoria']),
+            'completionist_hours' => $converterDuracao($jogo['tempoCompleto']),
+            'catalog_rating' => (float) $jogo['avaliacao'],
+            'cover_url' => $jogo['capa'],
+            'hero_url' => $jogo['capa'],
+            'best_price' => $melhorPreco,
+            'offers' => $ofertas,
+        ];
+    }
+
+    return $catalogo;
 }
